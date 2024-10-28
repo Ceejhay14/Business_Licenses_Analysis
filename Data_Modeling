@@ -287,7 +287,10 @@ CREATE INDEX idx_business_activity_id ON business_licenses_fact (business_activi
 CREATE INDEX idx_stat_id ON business_licenses_fact (stat_id);
 CREATE INDEX idx_account_id ON business_licenses_fact (account_id);
 
-SELECT *  FROM business_licenses_fact LIMIT 100;
+
+
+
+
 
 
 
