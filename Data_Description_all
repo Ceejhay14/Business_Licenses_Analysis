@@ -1,0 +1,130 @@
+** Business_license_fact **
+ID (TEXT):
+    A calculated ID for each record
+
+LICENSE ID (Numeric):
+    An internal database ID for each record. Each license can have multiple records as it goes through renewals and other transactions. 
+    See the LICENSE NUMBER field for the number generally known to the public and used in most other data sources that refer to the license.
+
+Site_Number (NUMERIC):
+    An internal database ID indicating the location of this licensed business to account for business owners with more than one location.
+
+LICENSE_CODE (NUMERIC):
+        A code for the type of license. Each code value corresponds to a specific LICENSE DESCRIPTION value.
+
+
+LICENSE_NUMBER (NUMERIC):
+    The license number known to the public and generally used in other data sources that refer to the license. 
+    This is the field most users will want for most purposes. Each license has a single license number that stays consistent throughout the lifetime of the license. 
+    By contrast, the LICENSE ID field is an internal database ID and not generally useful to external users.
+
+Location_id:
+    Identification referencing to loc_dimension with each of Business_license location
+
+Date_ID 
+    ID referencing date_dim with each of license payment, license start date, expiration, approval date, and date when license issued.
+       
+BUSINESS_ACTIVITY_ID (TEXT):
+	A code for the business activity. Each ID value corresponds to a specific BUSINESS ACTIVITY value.
+
+Stat_ID: 
+    Each ID value corresponds to the status and type of license application of the license.
+
+Account_id:
+    ID that corresponds to the legal name and namd of the business of each account number.
+
+** account_info_dim **
+
+ACCOUNT_ID:
+    ID for matching rows in account_info_dim
+
+ACCOUNT NUMBER (Numeric):
+    The account number of the business owner, which will stay consistent across that owner's licenses.
+
+LEGAL_NAME (TEXT)
+
+DOING_BUSINESS_AS_NAME (TEXT)
+
+** business_activity_dim **
+
+BUSINESS_ACTIVITY_ID (TEXT):
+	A code for the business activity. Each ID value corresponds to a specific BUSINESS ACTIVITY value.
+
+BUSINESS_ACTIVITY (TEXT)
+
+** date_dim **
+
+DATE_ID:
+    ID for matching rows in date_dim
+
+PAYMENT_DATE (TIMESTAMP)
+
+LICENSE_TERM_START_DATE (TIMESTAMP)
+
+LICENSE_TERM_EXPIRATION_DATE (TIMESTAMP)
+
+LICENSE_APPROVED_FOR_ISSUANCE (TIMESTAMP):
+    This is the date the license was ready for issuance. Licenses may not be issued if the customer owes debt to the City.
+
+DATE_ISSUED (TIMESTAMP)
+
+** license_code_dim **
+
+LICENSE_CODE (NUMERIC):
+        A code for the type of license. Each code value corresponds to a specific LICENSE DESCRIPTION value.
+LICENSE_DESCRIPTION (TEXT)
+
+** license_stat_dim **
+
+STAT_ID:
+    ID for matching rows in license_stat_dim
+
+Application Type (TEXT):
+    ISSUE: record associated with the initial license Application
+    RENEW: subsequent renewal record
+    C_LOC: change of location 
+    C_CAPA: change of capacity record
+    C_EXPA: applies to business that have liquor licenses
+    C_SBA: change of business activity record (Added business or expired)
+
+CONDITIONAL_APPROVAL (TEXT):
+    This pertains to applications that contain liquor licenses. Customers may request a conditional approval prior to building out the space.
+
+License Status (TEXT):
+    AAI: License Issued
+    AAC: License cancelled during its term
+    REV: License revoked
+    REA: license revocation has been appealed 
+    INQ: ?
+
+** loc_dimension **
+
+LOCATION_ID (TEXT):
+    ID for matching rows in loc_dimension 
+
+ADDRESS (TEXT)
+
+CITY (TEXT)
+
+STATE (TEXT)
+
+ZIP_CODE (TEXT)
+    
+WARD (NUMERIC):
+    The ward where the business is located.
+
+PRECINCT (NUMERIC):
+    The precinct within the ward where the business is located. Note the the same precinct numbers exist in multiple wards.
+
+WARD_PRECINCT (TEXT):
+    The ward and precinct where the business is located. This column can be used to filter by precinct more easily across multiple wards.
+
+POLICE_DISTRICT (NUMERIC)
+LATITUDE (NUMERIC)
+
+LONGITUDE (NUMERIC)
+
+LOC (Text)
+
+    
+
