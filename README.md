@@ -11,8 +11,8 @@ Objectives
   - Identify the most common types of business licenses and sectors.
   - Provide interactive visualizations for exploring data at a granular level.
 
-Data Sources
-  Chicago Data Portal
+Data Sources:
+  - Chicago Data Portal
     - Business Licenses: https://data.cityofchicago.org/Community-Economic-Development/Business-Licenses/r5kz-chrr/about_data
 
 Data Descriptions
