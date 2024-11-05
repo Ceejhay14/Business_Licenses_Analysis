@@ -1,0 +1,72 @@
+business_licenses_fact:
+
+** Additional Columns **
+
+    - License_Duration: Compute the difference in terms of month in related rows in date_dim
+        License_Duration = 
+            DATEDIFF(
+                RELATED('public date_dim'[license_term_start_date]),
+                RELATED('public date_dim'[license_term_expiration_date]), MONTH
+                )
+
+** Measures **
+    - Active_License: Count the rows if the license is not yet expired
+    Active_License = 
+        CALCULATE(
+            COUNTROWS('public business_licenses_fact'),
+            'public date_dim'[license_term_expiration_date] > TODAY()
+        )
+
+** Overview **
+
+Cards: 
+    - Average Duration in Months -> Average duration of license issued based on the category
+    - Active License -> Currently Active License
+    - Expired License -> Total expired License
+
+Slider:
+    - date issued -> interactive slider to filter out dates (applies to all visualization in the page)
+    - License Category -> interactive slider to filter out license category
+    - Status -> Interactive slider to filter out status of the license application
+
+Bar Chart:
+    - Shows Top 10 overall business licenses category (default)
+    - Shows top 10 business licennses category based on filter
+
+Table Chart:
+    - Shows License all licenses category alphabetically (default)
+    - Active Licenses -> unexpired licenses per category
+    - Renewed Licesnse -> Licenses Renewed per Category within the same account number
+    - Expired License -> Count of Licenses per category that is passed the expiration date
+    - Renewal Rate -> Rate at which the same account number renewed their license
+
+Line Chart
+    - Shows the overall trend of Issued License per Year by Quarter (default)
+    - Adjust accordingly based on date and category the user choose
+
+** License Details **
+
+** Note: This page contains specific licenses statistics such as active licenses within the chosen category and date,
+        expiring licenses in the next 3 months, renewed License, Average License Duration in Months, renewal date, 
+        popular area in which the business have a license in, a map chart visualizing where this licenses are located and/or performing the business
+        , and a pie chart that tells us how many licenses comes with liquor license 
+**
+
+Cards:
+    - License Category 
+    - Active License
+    - Expiring within 3 months -> Licenses that are expiring in the next 3 months
+    - Average License Duration -> Average validity of a license in months
+    - Renewal Rate -> rate at which the same account number of a business renewed their license
+
+Tree map:
+    - Overall Issued License by zip_code -> Count of issued license within the chosen time frame ranked by zip code
+
+Map Chart:
+    - Active Licenses by zip code -> locate how many businesses are operating in the zip code
+    - Tooltip : Active License, total Issued license in the area, and Renewal Rate
+
+* To visualize where the businesses are populated, I only included active licenses for more insight *
+
+Pie Chart:
+    - Count of License with Liquor License -> give information on how many licneses applied for an additional liquor license

@@ -9,8 +9,12 @@ Objectives
   - Analyze trends in business license issuance across categories and locations.
   - Investigate patterns in license applications and renewals.
   - Identify the most common types of business licenses and sectors.
-  - Calculate compliance rates based on license expiration and renewal data.
   - Provide interactive visualizations for exploring data at a granular level.
 
 Data Sources
+  Chicago Data Portal
+    - Business Licenses: https://data.cityofchicago.org/Community-Economic-Development/Business-Licenses/r5kz-chrr/about_data
 
+Data Descriptions
+  - https://github.com/Ceejhay14/Business_Licenses_Analysis/blob/main/Data_Description_all
+ 
