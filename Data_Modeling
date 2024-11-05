@@ -289,18 +289,6 @@ CREATE INDEX idx_account_id ON business_licenses_fact (account_id);
 
 
 
-SELECT COUNT(*) FROM business_licenses_fact AS b 
-LEFT JOIN date_dim AS L ON b.date_id = L.date_id
-WHERE date_issued IS NOT NULL;
-
-
-SELECT * FROM business_licenses_fact LIMIT 5 
-
-SELECT DISTINCT COUHNT(*) FROM business_licenses_fact AS b 
-
-
-
-
 
 
 

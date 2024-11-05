@@ -40,31 +40,5 @@ COPY business_licenses_fact
 FROM 'C:\Users\carlj\OneDrive\Desktop\Business_Licenses\Business_Licenses_2024100.csv'
 WITH (FORMAT csv, HEADER true, DELIMITER ',', ENCODING 'UTF8');
 
-Create TABLE business_owners_dim (
-   Account_Number Numeric(20), 
-   Legal_Name text,
-   Owner_First_Name Text,
-   Owner_Middle_Initial Text,
-   Owner_Last_Name Text,
-   Suffix Text,
-   Legal_Entity_Onwer Text,
-   Title Text
-)
-
-
-COPY business_owners_dim
-FROM 'C:\Users\carlj\OneDrive\Desktop\Business_Licenses\Business_Owners_20241009.csv'
-WITH (FORMAT csv, HEADER true, DELIMITER ',', ENCODING 'UTF8');
-
-ALTER TABLE business_owners_dim 
-    ADD Owner_ID SERIAL PRIMARY KEY;
-
-ALTER TABLE business_licenses_fact
-    DROP Owner_ID;
-
-
-Select *
-FROM business_owners_dim
-LIMIT 1000;
 
 

@@ -18,3 +18,5 @@ Data Sources:
 Data Descriptions
   - https://github.com/Ceejhay14/Business_Licenses_Analysis/blob/main/Data_Description_all
  
+Data Modeling: https://github.com/Ceejhay14/Business_Licenses_Analysis/blob/main/Data_Modeling
+
