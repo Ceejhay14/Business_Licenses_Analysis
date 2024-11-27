@@ -20,3 +20,5 @@ Data Descriptions
  
 Data Modeling: https://github.com/Ceejhay14/Business_Licenses_Analysis/blob/main/Data_Modeling
 
+Report Sample: https://github.com/Ceejhay14/Business_Licenses_Analysis/blob/main/Report%20Sample.pdf
+
