@@ -33,13 +33,6 @@ Stat_ID:
 Account_id:
     ID that corresponds to the legal name and namd of the business of each account number.
 
-community_area (NEW):
-    Number identification of the community area where the license is operating
-community_area_name (NEW):
-    name of the area where the license is operating
-neighborhood:
-    the neighborhood of where the license is originating
-
 ** account_info_dim **
 
 ACCOUNT_ID:
@@ -127,6 +120,14 @@ WARD_PRECINCT (TEXT):
     The ward and precinct where the business is located. This column can be used to filter by precinct more easily across multiple wards.
 
 POLICE_DISTRICT (NUMERIC)
+
+community_area (NEW):
+    Number identification of the community area where the license is operating
+community_area_name (NEW):
+    name of the area where the license is operating
+neighborhood:
+    the neighborhood of where the license is originating
+    
 LATITUDE (NUMERIC)
 
 LONGITUDE (NUMERIC)
