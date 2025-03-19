@@ -1,5 +1,10 @@
 /* Drop unneccessary column and columns with NULL values */
-ALTER TABLE business_licenses_fact DROP COLUMN WARD,
+
+
+SELECT * FROM business_licenses_fact LIMIT 50;
+
+ALTER TABLE business_licenses_fact 
+    DROP COLUMN WARD,
     DROP COLUMN PRECINCT,
     DROP COLUMN WARD_PRECINCT,
     DROP COLUMN POLICE_DISTRICT,
@@ -9,9 +14,8 @@ ALTER TABLE business_licenses_fact DROP COLUMN WARD,
     DROP COLUMN ssa,
     DROP COLUMN latitude,
     DROP COLUMN longitude,
-    DROP COLUMN loc
-    
-ALTER TABLE business_licenses_fact DROP LICENSE_STATUS_CHANGE_DATE;
+    DROP COLUMN location POINT
+    DROP LICENSE_STATUS_CHANGE_DATE;
 
 
 /* Create location dimension to reduce redundant addresses in the fact table */
@@ -26,16 +30,17 @@ CREATE TABLE loc_dimension(
     precinct NUMERIC(20),
     ward_precinct TEXT,
     police_district NUMERIC(20),
+    SSA TEXT,
     latitude NUMERIC(20),
     longitude NUMERIC(20),
-    loc TEXT
+    location POINT
 );
 
 
-/*Populate loc_dimension */
+/*Populate loc_dimension*/
 
 INSERT INTO loc_dimension (address, city, state, zip_code, ward, 
-                            precinct, ward_precinct, police_district, latitude, longitude, loc)
+                            precinct, ward_precinct, police_district, ssa,latitude, longitude, location)
 SELECT DISTINCT 
     address,
     city, 
@@ -45,18 +50,55 @@ SELECT DISTINCT
     precinct, 
     ward_precinct, 
     police_district,
+    ssa,
     latitude,
     longitude,
-    loc::TEXT
+    location
 FROM business_licenses_fact
-WHERE loc IS NOT NULL;
+/* For visualization purposes, I am only including where there are not null*/
+WHERE location IS NOT NULL;
+
+SELECT location FROM test
+WHERE latitude IS NULL AND longitude IS NULL;
+/* There are 89,939 entries that doesn't have a longitude and latitude information*/
+
+SELECT location FROM test
+WHERE zip_code IS NULL AND latitude IS NULL AND longitude IS NULL;
+/*There are only 90 entries where there's no information on zip code latitude and longitude*/
+
+SELECT COUNT(*) FROM test;
+/* 1,158,057 rows*/
+
+SELECT DISTINCT 
+address, city, state, zip_code, ward,precinct,ward_precinct,
+police_district, community_area,community_area_name,neighborhood,ssa,
+location::TEXT
+FROM test
+WHERE
+    address IS NOT NULL AND 
+    city IS NOT NULL AND 
+    state IS NOT NULL AND 
+    zip_code IS NOT NULL AND 
+    ward IS NOT NULL AND 
+    precinct IS NOT NULL AND 
+    ward_precinct IS NOT NULL AND 
+    police_district IS NOT NULL AND 
+    community_area IS NOT NULL AND 
+    community_area_name IS NOT NULL AND 
+    neighborhood IS NOT NULL;
+
+
+
+SELECT DISTINCT zip_code
+FROM TEST
+
+SELECT count(*) FROM test
+WHERE license_description
+
+
 
 /* Create a column in fact table, set as foreign key and its reference
 and populate data that matches surrogate key in dimension table */
-
-drop table loc_dimension;
-ALTER TABLE business_licenses_fact
-    drop COLUMN location_id;
 
 ALTER TABLE business_licenses_fact
     ADD location_id INT;
@@ -77,7 +119,7 @@ WHERE fc.address = lc.address AND
     fc.police_district = lc.police_district AND 
     fc.latitude = lc.latitude AND 
     fc.longitude = lc.longitude AND 
-    fc.loc::TEXT = lc.loc
+    fc.loc::TEXT = lc.location
 ;
 /* Drop normalized columns*/
 ALTER TABLE business_licenses_fact 
@@ -91,7 +133,7 @@ ALTER TABLE business_licenses_fact
     DROP COLUMN police_district,
     DROP COLUMN latitude,
     DROP COLUMN longitude,
-    DROP COLUMN loc
+    DROP COLUMN location
 
 /* Create dim for date*/
 
@@ -136,6 +178,7 @@ WHERE fc.PAYMENT_DATE::DATE = di.PAYMENT_DATE AND
     fc.DATE_ISSUED::DATE = di.DATE_ISSUED
 ;
 
+SELECT * FROM date_dim limit 5;
 ALTER TABLE business_licenses_fact 
 DROP COLUMN application_created_date,
 DROP COLUMN APPLICATION_REQUIREMENTS_COMPLETE,
@@ -278,14 +321,7 @@ DROP COLUMN account_number,
 DROP COLUMN legal_name,
 DROP COLUMN DOING_BUSINESS_AS_NAME;
 
--- Create indexes on foreign key columns for better performance
-CREATE INDEX idx_license_code ON business_licenses_fact (license_code);
-CREATE INDEX idx_license_number ON business_licenses_fact (license_number);
-CREATE INDEX idx_location_id ON business_licenses_fact (location_id);
-CREATE INDEX idx_date_id ON business_licenses_fact (date_id);
-CREATE INDEX idx_business_activity_id ON business_licenses_fact (business_activity_id);
-CREATE INDEX idx_stat_id ON business_licenses_fact (stat_id);
-CREATE INDEX idx_account_id ON business_licenses_fact (account_id);
+
 
 
 

@@ -1,0 +1,1 @@
+Select * FROM business_licenses_uncleaned LIMIT 50;

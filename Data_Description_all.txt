@@ -33,6 +33,13 @@ Stat_ID:
 Account_id:
     ID that corresponds to the legal name and namd of the business of each account number.
 
+community_area (NEW):
+    Number identification of the community area where the license is operating
+community_area_name (NEW):
+    name of the area where the license is operating
+neighborhood:
+    the neighborhood of where the license is originating
+
 ** account_info_dim **
 
 ACCOUNT_ID:
@@ -125,6 +132,8 @@ LATITUDE (NUMERIC)
 LONGITUDE (NUMERIC)
 
 LOC (Text)
+
+
 
     
 
